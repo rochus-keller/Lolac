@@ -56,13 +56,13 @@ MODULE LSC;  (*Lola System Compiler, NW 8.1.95 / 27.8.2018 for RISC (LSCX)*)
       END
     ELSIF xtyp IS LSB.ArrayType THEN
       IF xtyp(LSB.ArrayType).eltyp = LSB.bitType THEN
-        IF (ytyp IS LSB.ArrayType) & (xtyp(LSB.ArrayType).eltyp = LSB.bitType) THEN
+        IF (ytyp IS LSB.ArrayType) & (ytyp(LSB.ArrayType).eltyp = LSB.bitType) THEN
           IF xtyp.size # ytyp.size THEN Err(33) END  (* x + y *)
         ELSIF ytyp = LSB.integer THEN   (* w + 5 *)
           IF xtyp.size < Log(y.val) THEN Err(30) END
         ELSIF ytyp = LSB.string THEN   (*x + {...} *)
           IF xtyp.size # y.size THEN Err(31) END
-        ELSE Err(34)
+        ELSIF ytyp # LSB.bitType THEN Err(34)
         END
       ELSIF (ytyp IS LSB.ArrayType) & (xtyp(LSB.ArrayType).eltyp = ytyp(LSB.ArrayType).eltyp) THEN
         IF (xtyp.size # ytyp.size) THEN Err(40) END
@@ -455,7 +455,6 @@ MODULE LSC;  (*Lola System Compiler, NW 8.1.95 / 27.8.2018 for RISC (LSCX)*)
           IF sym = LSS.lparen THEN (*clock*)
             LSS.Get(sym); expression(clock);
             IF clock.type # LSB.bitType THEN LSS.Mark("clock must be bitType") END ;
-            IF (clock IS LSB.Object) & (clock(LSB.Object).name = "clk") THEN kind := 1; clock := NIL END ;
             IF sym = LSS.rparen THEN LSS.Get(sym) ELSE LSS.Mark("rparen ?") END
           ELSE LSS.Mark("lparen expected"); clock := undef
           END ;

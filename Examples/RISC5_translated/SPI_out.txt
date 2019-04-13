@@ -1,0 +1,21 @@
+Lolac version 19-04-09/c++
+see https://github.com/rochus-keller/Lolac for more information
+Lola compiler; NW 27.8.2018
+compiling Lola: SPI
+  pos 757  err:  undef
+74
+  pos 770  err:  bad statement
+  pos 779  err:  bad statement
+  pos 795  err:  bad statement
+  pos 810  err:  bad statement
+  pos 816  err:  bad statement
+  pos 830  err:  bad statement
+  pos 841  err:  bad statement
+  pos 854  err:  bad statement
+  pos 865  err:  bad statement
+  pos 877  err:  bad statement
+  pos 886  err:  bad statement
+  pos 898  err:  bad statement
+  pos 904  err:  bad statement
+  pos 914  err:  bad statement
+compilation failed

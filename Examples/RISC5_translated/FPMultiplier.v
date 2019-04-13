@@ -4,8 +4,8 @@ input clk, run,
 input [31:0] x, y,
 output stall,
 output [31:0] z);
-??? [4:0] S;
-??? [47:0] P;
+reg [4:0] S;
+reg [47:0] P;
 wire sign;
 wire [7:0] xe, ye;
 wire [8:0] e0, e1;
@@ -21,4 +21,7 @@ assign e1 = ((e0 - 127) + {8'h0, P[47]});
 assign w0 = (P[0] ? {1'h1, y[22:0]} : 0);
 assign w1 = ({1'h0, P[47:24]} + {1'h0, w0});
 assign z0 = (P[47] ? (P[47:23] + 1) : (P[46:22] + 1));
+always @ (posedge clk) begin S <= (run ? (S + 1) : 0);
+P <= ((S == 0) ? {24'h0, 1'h1, x[22:0]} : {w1, P[23:1]});
+end
 endmodule

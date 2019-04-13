@@ -5,12 +5,12 @@ input [31:0] inbus, codebus,
 output [23:0] adr,
 output rd, wr, ben,
 output [31:0] outbus);
-??? [21:0] PC;
-??? [31:0] IR;
-??? N, Z, C, OV, stallL1;
-??? [31:0] H;
-??? irq1, intEnb, intPnd, intMd;
-??? [25:0] SPC;
+reg [21:0] PC;
+reg [31:0] IR;
+reg N, Z, C, OV, stallL1;
+reg [31:0] H;
+reg irq1, intEnb, intPnd, intMd;
+reg [25:0] SPC;
 wire [21:0] pcmux, pcmux0, nxpc;
 wire cond, S, sa, sb, sc, p, q, u, v;
 wire [3:0] op, ira, ira0, irb, irc;
@@ -81,4 +81,18 @@ assign Ldr = ((p & ~q) & ~u);
 assign Str = ((p & ~q) & u);
 assign Br = (p & q);
 assign RTI = (((Br & ~u) & ~v) & IR[4]);
+always @ (posedge clk) begin PC <= pcmux;
+IR <= (stall ? IR : codebus);
+N <= nn;
+Z <= zz;
+C <= cx;
+OV <= vv;
+stallL1 <= (stallX ? stallL1 : stallL0);
+H <= (Mul ? product[63:32] : (Div ? remainder : H));
+irq1 <= irq;
+intEnb <= (~rst ? 0 : ((((Br & ~u) & ~v) & IR[5]) ? IR[0] : intEnb));
+intPnd <= ((rst & ~intAck) & ((~irq1 & irq) | intPnd));
+intMd <= ((rst & ~RTI) & (intAck | intMd));
+SPC <= (intAck ? {nn, zz, cx, vv, pcmux0} : SPC);
+end
 endmodule

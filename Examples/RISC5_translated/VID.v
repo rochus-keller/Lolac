@@ -11,8 +11,8 @@ reg [10:0] hcnt;
 reg [9:0] vcnt;
 reg hblank;
 reg [31:0] pixbuf, vidbuf;
-??? req1;
-??? [4:0] hword;
+reg req1;
+reg [4:0] hword;
 assign req = req1;
 assign vidadr = (229312 + {3'h0, ~vcnt, hword});
 assign hsync = ~((hcnt >= 1086) & (hcnt <  1190));
@@ -29,5 +29,8 @@ vcnt <= (hend ? (vend ? 0 : (vcnt + 1)) : vcnt);
 hblank <= (xfer ? hcnt[10] : hblank);
 pixbuf <= (xfer ? vidbuf : {1'h0, pixbuf[31:1]});
 vidbuf <= (req ? viddata : vidbuf);
+end
+always @ (posedge clk) begin req1 <= ((~vblank & ~hcnt[10]) & (hcnt[5] ^ hword[0]));
+hword <= hcnt[9:5];
 end
 endmodule
