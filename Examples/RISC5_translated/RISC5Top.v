@@ -17,13 +17,12 @@ output [2:0] RGB,
 input PS2C, PS2D,
 inout msclk, msdat,
 inout [7:0] gpio);
-reg clk;
-??? rst, bitrate;
-??? [7:0] Lreg;
-??? [15:0] cnt0;
-??? [31:0] cnt1;
-??? [3:0] spiCtrl;
-??? [7:0] gpout, gpoc;
+reg clk, rst, bitrate;
+reg [7:0] Lreg;
+reg [15:0] cnt0;
+reg [31:0] cnt1;
+reg [3:0] spiCtrl;
+reg [7:0] gpout, gpoc;
 wire dmy;
 wire [23:0] adr;
 wire [3:0] iowadr;
@@ -80,5 +79,14 @@ assign doneKbd = ((rd & ioenb) & (iowadr == 7));
 assign limit = (cnt0 == 24999);
 assign spiStart = ((wr & ioenb) & (iowadr == 4));
 always @ (posedge CLK50M) begin clk <= ~clk;
+end
+always @ (posedge clk) begin rst <= (((cnt1[4:0] == 5'h0) & limit) ? ~btn[3] : rst);
+bitrate <= (~rst ? 0 : (((wr & ioenb) & (iowadr == 3)) ? outbus[0] : bitrate));
+Lreg <= (~rst ? 0 : (((wr & ioenb) & (iowadr == 1)) ? outbus[7:0] : Lreg));
+cnt0 <= (limit ? 0 : (cnt0 + 1));
+cnt1 <= (cnt1 + {31'h0, limit});
+spiCtrl <= (~rst ? 0 : (((wr & ioenb) & (iowadr == 5)) ? outbus[3:0] : spiCtrl));
+gpout <= (~rst ? 0 : (((wr & ioenb) & (iowadr == 8)) ? outbus[7:0] : gpout));
+gpoc <= (~rst ? 0 : (((wr & ioenb) & (iowadr == 9)) ? outbus[7:0] : gpoc));
 end
 endmodule

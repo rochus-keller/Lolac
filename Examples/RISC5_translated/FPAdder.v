@@ -4,9 +4,9 @@ input clk, run, u, v,
 input [31:0] x, y,
 output stall,
 output [31:0] z);
-??? [1:0] State;
-??? [24:0] x3, y3, t3;
-??? [26:0] Sum;
+reg [1:0] State;
+reg [24:0] x3, y3, t3;
+reg [26:0] Sum;
 wire xs, ys, xn, yn;
 wire [8:0] xe, ye;
 wire [24:0] xm, ym;
@@ -66,4 +66,10 @@ assign sc0 = sc[1:0];
 assign sc1 = sc[3:2];
 assign t1 = ((sc0 == 3) ? {s[22:1], 3'h0} : ((sc0 == 2) ? {s[23:1], 2'h0} : ((sc0 == 1) ? {s[24:1], 1'h0} : s[25:1])));
 assign t2 = ((sc1 == 3) ? {t1[12:0], 12'h0} : ((sc1 == 2) ? {t1[16:0], 8'h0} : ((sc1 == 1) ? {t1[20:0], 4'h0} : t1)));
+always @ (posedge clk) begin State <= (run ? (State + 1) : 0);
+x3 <= (sxh ? {25{xs}} : (sx[4] ? {{16{xs}}, x2[24:16]} : x2));
+y3 <= (syh ? {25{ys}} : (sy[4] ? {{16{ys}}, y2[24:16]} : y2));
+t3 <= (sc[4] ? {t2[8:0], 16'h0} : t2);
+Sum <= ({xs, xs, x3} + {ys, ys, y3});
+end
 endmodule
