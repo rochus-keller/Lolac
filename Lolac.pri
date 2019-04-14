@@ -6,7 +6,8 @@ SOURCES += \
     LlLSV.cpp \
     LlFiles.cpp \
     LlOberon.cpp \
-    LlTexts.cpp
+    LlTexts.cpp \
+    Ll_Global.cpp
 
 HEADERS += \
     LlFiles.h \

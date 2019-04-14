@@ -17,7 +17,7 @@
 #* http://www.gnu.org/copyleft/gpl.html.
 #*/
 
-QT       += core
+QT       -= core
 QT       -= gui
 
 TARGET = Lolac
@@ -25,8 +25,7 @@ TEMPLATE = app
 
 INCLUDEPATH +=  ..
 
-SOURCES += main.cpp \
-    Ll_Global.cpp
+SOURCES += main.cpp
 
 CONFIG(debug, debug|release) {
         DEFINES += _DEBUG

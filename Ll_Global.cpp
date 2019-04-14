@@ -1,6 +1,5 @@
 #include "Ll_Global.h"
 #include <list>
-#include <QtDebug>
 using namespace Ll;
 
 static std::list<_Root*> s_objs;
