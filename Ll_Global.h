@@ -32,8 +32,10 @@ namespace Ll
 
     struct _Root
     {
-        _Root() {}
-        virtual ~_Root() {}
+        _Root();
+        virtual ~_Root();
+
+        void *operator new(size_t n);
 
         template<typename T>
         T _to()
@@ -48,6 +50,8 @@ namespace Ll
             return res;
         }
         virtual const char* typeName() const { return "_Root"; }
+
+        static void deleteArena();
     };
 
     template<typename T>

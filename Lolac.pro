@@ -17,7 +17,7 @@
 #* http://www.gnu.org/copyleft/gpl.html.
 #*/
 
-QT       -= core
+QT       += core
 QT       -= gui
 
 TARGET = Lolac
@@ -25,27 +25,8 @@ TEMPLATE = app
 
 INCLUDEPATH +=  ..
 
-SOURCES += \ 
-    LlLSB.cpp \
-    LlLSC.cpp \
-    LlLSP.cpp \
-    LlLSS.cpp \
-    LlLSV.cpp \
-    main.cpp \
-    LlFiles.cpp \
-    LlOberon.cpp \
-    LlTexts.cpp
-
-HEADERS += \
-    LlFiles.h \
-    LlLSB.h \
-    LlLSC.h \
-    LlLSP.h \
-    LlLSS.h \
-    LlLSV.h \
-    LlOberon.h \
-    LlTexts.h \
-    Ll_Global.h
+SOURCES += main.cpp \
+    Ll_Global.cpp
 
 CONFIG(debug, debug|release) {
         DEFINES += _DEBUG
@@ -55,6 +36,6 @@ CONFIG(debug, debug|release) {
 QMAKE_CXXFLAGS += -Wno-reorder -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable
 }
 
-
+include( Lolac.pri )
 
 

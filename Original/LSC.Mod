@@ -509,24 +509,15 @@ MODULE LSC;  (*Lola System Compiler, NW 8.1.95 / 27.8.2018 for RISC (LSCX)*)
     Texts.Append(Oberon.Log, W.buf)
   END Module;
 
-  PROCEDURE Compile*;
-    VAR beg, end, time: LONGINT;
-      S: Texts.Scanner; T: Texts.Text;
-  BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
-    IF S.class = Texts.Char THEN
-      IF S.c = "*" THEN
-      ELSIF S.c = "@" THEN
-        Oberon.GetSelection(T, beg, end, time);
-        IF time >= 0 THEN Module(T, beg) END
-      END
-    ELSIF S.class = Texts.Name THEN
-      NEW(T); Texts.Open(T, S.s); Module(T, 0)
-    END ;
+  PROCEDURE Compile*(file: ARRAY OF CHAR); (* modified by Rochus *)
+    VAR T: Texts.Text;
+  BEGIN 
+    NEW(T); Texts.Open(T, file); Module(T, 0);
     Texts.Append(Oberon.Log, W.buf)
   END Compile;
-
+  
 BEGIN Texts.OpenWriter(W);
-  Texts.WriteString(W, "Lola compiler; NW 27.8.2018"); Texts.WriteLn(W);
+  Texts.WriteString(W, "Lola compiler; NW 27.8.2018; modified version 14.4.2019"); Texts.WriteLn(W);
   factor := factor0; expression := expression0; Unit := Unit0;
   NEW(top); bot := LSB.root;
   NEW(undef); undef.tag := LSB.typ; undef.type := LSB.bitType; undef.next := NIL

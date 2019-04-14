@@ -21,7 +21,7 @@ Oberon::Oberon()
 
 Oberon::~Oberon()
 {
-
+    s_inst.release();
 }
 
 

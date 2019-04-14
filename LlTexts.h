@@ -15,11 +15,11 @@ namespace Ll
 	public:
 		static Texts* _inst();
 		Texts();
+        ~Texts();
 
 		// TYPE
 		struct Reader;
 		struct Writer;
-		struct Scanner;
         struct TextDesc;
 
 		struct Reader : public _Root {
@@ -37,15 +37,6 @@ namespace Ll
         };
         typedef TextDesc* Text;
 
-		struct Scanner : public _Root {
-			int /* unknown type */ c;
-			int /* unknown type */ class_;
-            _FxArray<char,128> s;
-		};
-
-        int Char;
-        int Name;
-        int String;
         static void OpenWriter(Texts::Writer& _0);
 		int Pos(const Texts::Reader& _0);
         static void WriteString(Texts::Writer& _0, _ValArray<char> _1);
@@ -55,11 +46,7 @@ namespace Ll
         static void Read(Texts::Reader& _0, char& _1);
         static void OpenReader(Texts::Reader& r, Texts::Text _1, int off);
         static void Write(Texts::Writer& _0, _ValArray<char> _1);
-		static void OpenScanner(const Texts::Scanner& _0, int /* unknown type */ _1, int /* unknown type */ _2);
-        static void Scan(Texts::Scanner& _0);
         static void Open(Texts::Text text, _ValArray<char> path);
-
-        static void putArg( const char* ); // added for command line handling
 	};
 }
 

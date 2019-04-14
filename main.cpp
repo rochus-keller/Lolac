@@ -5,9 +5,9 @@
 #include "LlTexts.h"
 #include <iostream>
 
-int main(int argc, char *argv[])
+int main(int argc, const char *argv[])
 {
-    std::cout << "Lolac version 19-04-13/c++" << std::endl
+    std::cout << "Lolac version 19-04-14/c++" << std::endl
         << "see https://github.com/rochus-keller/Lolac for more information" << std::endl;
 
     if( argc < 3 )
@@ -16,16 +16,19 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    for( int i = 1; i < argc; i++ )
-        Ll::Texts::putArg(argv[i]);
-
     try
     {
-        Ll::LSC::_inst()->Compile();
-        Ll::LSV::_inst()->List();
+        Ll::LSC::_inst()->Compile(argv[1]);
+        Ll::LSV::_inst()->List(argv[2]);
+        Ll::_Root::deleteArena();
     }catch( const char* str )
     {
         std::cerr << str << std::endl;
+        return -1;
+    }catch( ... )
+    {
+        std::cerr << "unknown exception" << std::endl;
+        return -1;
     }
 
     return 0;

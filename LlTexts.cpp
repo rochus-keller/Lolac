@@ -9,8 +9,6 @@ using namespace Ll;
 
 static std::auto_ptr<Texts> s_inst;
 
-static std::vector<std::string> s_args;
-
 Texts* Texts::_inst()
 {
     if( s_inst.get() == 0 )
@@ -18,9 +16,14 @@ Texts* Texts::_inst()
     return s_inst.get();
 }
 
-Texts::Texts():Char(1),Name(2),String(3)
+Texts::Texts()
 {
 
+}
+
+Texts::~Texts()
+{
+    s_inst.release();
 }
 
 void Ll::Texts::OpenWriter(Ll::Texts::Writer& _0)
@@ -76,27 +79,6 @@ void Ll::Texts::Write(Ll::Texts::Writer& _0, _ValArray<char> _1)
     _0.buf << _1.data();
 }
 
-void Ll::Texts::OpenScanner(const Ll::Texts::Scanner& _0, int _1, int _2)
-{
-    // NOP
-}
-
-void Ll::Texts::Scan(Ll::Texts::Scanner& _0)
-{
-    static int next = 0;
-    if( next < s_args.size() )
-    {
-        _0.c = 0;
-        _0.class_ = 2; // Name
-        _0.s = s_args[next++].c_str();
-    }else
-    {
-        _0.c = 0;
-        _0.class_ = 0;
-        _0.s.clear();
-    }
-}
-
 void Ll::Texts::Open(Ll::Texts::Text text, _ValArray<char> path)
 {
     std::ifstream f(path.data());
@@ -112,9 +94,5 @@ void Ll::Texts::Open(Ll::Texts::Text text, _ValArray<char> path)
         std::cerr << "cannot open file for reading: " << path.data();
 }
 
-void Texts::putArg(const char* arg)
-{
-    s_args.push_back(arg);
-}
 
 

@@ -209,18 +209,15 @@ MODULE LSV;  (*Lola System: display Verilog; generate txt-File; NW 27.8.2018*)
     END
   END ObjList2;
 
-  PROCEDURE List*;
-    VAR S: Texts.Scanner;
-  BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
-    IF (S.class = Texts.Name) OR (S.class = Texts.String) THEN
-      Texts.WriteString(W, LSB.modname); Texts.WriteString(W, " translating to  "); Texts.WriteString(W, S.s);
-      F := Files.New(S.s); Files.Set(R, F, 0);
+  PROCEDURE List*(file: ARRAY OF CHAR); (* modified by Rochus *)
+  BEGIN 
+      Texts.WriteString(W, LSB.modname); Texts.WriteString(W, " translating to  "); Texts.WriteString(W, file);
+      F := Files.New(file); Files.Set(R, F, 0);
       WriteString("`timescale 1ns / 1 ps"); WriteLn; nofgen := 0;
       WriteString("module "); WriteString(LSB.modname); WriteString("(   // translated from Lola"); WriteLn;
       ObjList0(LSB.top); ObjList1(LSB.top); ObjList2(LSB.top);
       WriteString("endmodule"); WriteLn;
       Files.Register(F); Texts.WriteString(W, " done"); Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf)
-    END
   END List;
 
 BEGIN Texts.OpenWriter(W); Constructor := Constructor0;

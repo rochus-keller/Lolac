@@ -21,7 +21,7 @@ Files::Files()
 
 Files::~Files()
 {
-
+    s_inst.release();
 }
 
 void Ll::Files::Write(Ll::Files::Rider _0, char _1)
@@ -30,7 +30,7 @@ void Ll::Files::Write(Ll::Files::Rider _0, char _1)
     _0.d_file->d_file.flush();
 }
 
-Ll::Files::File Ll::Files::New(_FxArray<char, 128> _0)
+Ll::Files::File Ll::Files::New(_ValArray<char> _0)
 {
     FileDesc* res = new FileDesc();
     res->d_file.open(_0.data(), std::ios::out);

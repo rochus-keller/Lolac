@@ -30,7 +30,7 @@ namespace Ll
         };
 
 		static void Write(Files::Rider _0, char _1);
-        Files::File New(_FxArray<char,128> _0); // RK
+        Files::File New(_ValArray<char> _0); // RK
         static void Set(Files::Rider& _0, Files::File _1, int _2);
 		static void Register(Files::File _0);
 	};
