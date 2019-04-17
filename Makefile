@@ -54,7 +54,8 @@ SOURCES       = LlLSB.cpp \
 		main.cpp \
 		LlFiles.cpp \
 		LlOberon.cpp \
-		LlTexts.cpp 
+		LlTexts.cpp \
+		Ll_Global.cpp 
 OBJECTS       = LlLSB.o \
 		LlLSC.o \
 		LlLSP.o \
@@ -63,7 +64,8 @@ OBJECTS       = LlLSB.o \
 		main.o \
 		LlFiles.o \
 		LlOberon.o \
-		LlTexts.o
+		LlTexts.o \
+		Ll_Global.o
 
 QMAKE_TARGET  = Lolac
 DESTDIR       = #avoid trailing-slash linebreak
@@ -106,6 +108,9 @@ clean:compiler_clean
 
 ####### Compile
 
+LlLSB.o: Ll_Global.cpp Ll_Global.h 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Ll_Global.o Ll_Global.cpp
+	
 LlLSB.o: LlLSB.cpp LlLSB.h \
 		../Lolac/Ll_Global.h \
 		../Lolac/LlTexts.h \
