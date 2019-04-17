@@ -108,7 +108,7 @@ clean:compiler_clean
 
 ####### Compile
 
-LlLSB.o: Ll_Global.cpp Ll_Global.h 
+Ll_Global.o: Ll_Global.cpp Ll_Global.h 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Ll_Global.o Ll_Global.cpp
 	
 LlLSB.o: LlLSB.cpp LlLSB.h \
