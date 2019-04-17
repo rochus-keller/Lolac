@@ -1,0 +1,18 @@
+-- Z:\home\me\RISC5_translated : Z:\home\me\RISC5_translated_voc -- includes identical,differing files
+.\divider.v	identical
+.\fpadder.v	identical
+.\fpdivider.v	identical
+.\fpmultiplier.v	identical
+.\leftshifter.v	identical
+.\mousep.v	identical
+.\multiplier.v	identical
+.\ps2.v	identical
+.\readme.txt	different (Z:\home\me\RISC5_translated_voc is more recent)
+.\rightshifter.v	identical
+.\risc5.v	identical
+.\risc5top.v	identical
+.\rs232r.v	identical
+.\rs232t.v	identical
+.\spi.v	identical
+.\vid.v	identical
+-- 16 files listed

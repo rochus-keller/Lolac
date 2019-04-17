@@ -25,15 +25,14 @@
 #include <cstring>
 #include <typeinfo>
 #include <iostream>
+#include <stdint.h>
 
 namespace Ll
 {
-    typedef unsigned char uint8_t;
-
     struct _Root
     {
-        _Root();
-        virtual ~_Root();
+        _Root(){}
+        virtual ~_Root(){}
 
         void *operator new(size_t n);
 
@@ -52,6 +51,19 @@ namespace Ll
         virtual const char* typeName() const { return "_Root"; }
 
         static void deleteArena();
+
+        static int MOD(int a, int b) { return ( a % b + b ) % b; }
+        static int DIV(int a, int b) { return ( a - MOD(a, b) ) / b; }
+        // from the languate report: x = q*y + r and 0<= r < y
+        // x = q*y + r -> x - r = q * y -> ( x - r ) / y = q
+        //      therefore q = x DIV y = ( x - r ) / y
+        // x = q*y + r -> x - q*y = r
+        //      therefore r = x MOD y = x - q*y
+        // Example:
+        // q = ( -1 - r ) / 16
+        //  r = 15 -> q = ( -1 - 15 ) / 16 = -16 / 16 = -1
+
+        static int ASR(int a, int b) { return ((int64_t)(a)>>(b)); }
     };
 
     template<typename T>

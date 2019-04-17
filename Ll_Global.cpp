@@ -4,13 +4,6 @@ using namespace Ll;
 
 static std::list<_Root*> s_objs;
 
-_Root::_Root()
-{
-}
-
-_Root::~_Root()
-{
-}
 
 void*_Root::operator new(size_t n)
 {
@@ -28,3 +21,4 @@ void _Root::deleteArena()
     }
     s_objs.clear();
 }
+
