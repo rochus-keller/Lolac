@@ -36,7 +36,7 @@ RightShifter RshUnit(.x(B), .sc(C1[4:0]), .md(IR[16]), .y(rshout));
 FPAdder faddUnit(.clk(clk), .run((Fadd | Fsub)), .u(u), .v(v), .stall(stallFA), .x(B), .y({(Fsub ^ C0[31]), C0[30:0]}), .z(fsum));
 FPMultiplier fmulUnit(.clk(clk), .run(Fmul), .stall(stallFM), .x(B), .y(C0), .z(fprod));
 FPDivider fdivUnit(.clk(clk), .run(Fdiv), .stall(stallFD), .x(B), .y(C0), .z(fquot));
-assign pcmux = (~rst ? 4192256 : (intAck ? 1 : pcmux0));
+assign pcmux = (~rst ? 22'h3FF800 : (intAck ? 1 : pcmux0));
 assign pcmux0 = (stall ? PC : (RTI ? SPC[21:0] : ((Br & cond) ? (u ? (disp + nxpc) : C0[23:2]) : nxpc)));
 assign nxpc = (PC + 1);
 assign cond = (IR[27] ^ (((((((((cc == 0) & N) | ((cc == 1) & Z)) | ((cc == 2) & C)) | ((cc == 3) & OV)) | ((cc == 4) & (C | Z))) | ((cc == 5) & S)) | ((cc == 6) & (S | Z))) | (cc == 7)));

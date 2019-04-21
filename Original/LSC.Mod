@@ -145,7 +145,10 @@ MODULE LSC;  (*Lola System Compiler, NW 8.1.95 / 27.8.2018 for RISC (LSCX)*)
     IF sym = LSS.ident THEN
       x := ThisObj(LSS.id); LSS.Get(sym);
       IF x.tag = LSB.var THEN selector(x)
-      ELSIF x.tag = LSB.const THEN n := x.b.val; NEW(x); x.tag := LSB.lit; x.val := n; x.type := LSB.integer
+      ELSIF x.tag = LSB.const THEN 
+        n := x.b.val; len := x.b.size; 
+        NEW(x); x.tag := LSB.lit; x.val := n; 
+        x.type := LSB.integer; x.size := len
       ELSE LSS.Mark("bad factor")
       END
     ELSIF sym = LSS.lparen THEN
@@ -517,7 +520,7 @@ MODULE LSC;  (*Lola System Compiler, NW 8.1.95 / 27.8.2018 for RISC (LSCX)*)
   END Compile;
   
 BEGIN Texts.OpenWriter(W);
-  Texts.WriteString(W, "Lola compiler; NW 27.8.2018; modified version 14.4.2019"); Texts.WriteLn(W);
+  Texts.WriteString(W, "Lola compiler; NW 27.8.2018; modified version 21.4.2019"); Texts.WriteLn(W);
   factor := factor0; expression := expression0; Unit := Unit0;
   NEW(top); bot := LSB.root;
   NEW(undef); undef.tag := LSB.typ; undef.type := LSB.bitType; undef.next := NIL

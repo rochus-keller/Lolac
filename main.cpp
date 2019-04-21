@@ -7,7 +7,7 @@
 
 int main(int argc, const char *argv[])
 {
-    std::cout << "Lolac version 19-04-14/c++" << std::endl
+    std::cout << "Lolac version 19-04-21/c++" << std::endl
         << "see https://github.com/rochus-keller/Lolac for more information" << std::endl;
 
     if( argc < 3 )

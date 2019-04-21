@@ -28,11 +28,12 @@ BEGIN sign := x.31 ^ y.31;   (*xor*)
     ~e1.7 -> {sign, 0FFH'8, z0[23:1]} : 0;  (*overflow*)
 END FPMultiplier.
 
+(* RK: commented out second version which is obviously ignored by original Lola-2 compiler
 MODULE FPMultiplier(
   IN clk, run: BIT; x, y: WORD;
   OUT stall: BIT; z: WORD);
 
-  REG (clk) S: [5] BIT;   (*state*)
+  REG (clk) S: [5] BIT;
     B2, A2: [24] BIT;
 
   VAR sign: BIT;
@@ -41,7 +42,7 @@ MODULE FPMultiplier(
     B0: [25] BIT;
     B00, B01, B1, A1, A0, z0: [24] BIT;
 
-BEGIN sign := x.31 ^ y.31;   (*xor*)
+BEGIN sign := x.31 ^ y.31;
   xe := x[30:23]; ye := y[30:23]; e0 := {0'1, xe} + {0'1, ye};
   B00 := (S = 0) -> 0 : B2;
   B01 := A0.0 -> {1'1, y[22:0]} : 0;
@@ -54,9 +55,10 @@ BEGIN sign := x.31 ^ y.31;   (*xor*)
   z0 := B1.23 -> B1 : {B1[22:0], A1.23};
   z := (xe = 0) | (ye = 0) -> 0 :
     ~e1.8 -> {sign, e1[7:0], z0[22:0]} :
-    ~e1.7 -> {sign, 0FFH'8, z0[22:0]} : 0;  (*overflow*)
+    ~e1.7 -> {sign, 0FFH'8, z0[22:0]} : 0;
   stall := run & (S # 23);
 
   B2 := B1; A2 := A1;
   S := run -> S+1 : 0;
 END FPMultiplier.
+*)

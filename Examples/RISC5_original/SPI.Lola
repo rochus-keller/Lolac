@@ -20,6 +20,6 @@ BEGIN endtick := fast -> (tick = 1) : (tick = 63);    (*25 MHz clock*)
   tick := (~rst | rdyR | endtick) -> 0 : tick + 1;
   rdyR := (~rst | endtick & endbit) | ~start & rdyR;
   bitcnt := (~rst | start) -> 0 : (endtick & ~endbit) -> bitcnt + 1 : bitcnt;
-  shreg := ~rst -> $FFFFFFFF'32 : start -> dataTx :
+  shreg := ~rst -> 0FFFFFFFFH'32 : start -> dataTx : (* RK: fixed $FFFFFFFF'32 to 0FFFFFFFFH'32 *)
     endtick -> {shreg[30:24], MISO, shreg[22:16], shreg[31], shreg[14:8], shreg[23], shreg[6:0], (fast -> shreg[15] : MISO)} : shreg;
 END SPI.
